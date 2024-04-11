@@ -1,34 +1,4 @@
-// Array de objetos (productos)
-// const productos = [
-//   {
-//     id: 1,
-//     titulo: 'producto 1',
-//     precio: 1000,
-//     stock: 10,
-//   },
-//   {
-//     id: 2,
-//     titulo: 'producto 2',
-//     precio: 2000,
-//     stock: 20,
-//   },
-//   {
-//     id: 3,
-//     titulo: 'producto 3',
-//     precio: 3000,
-//     stock: 30,
-//   }
-// ]
-
-// productos.push({
-//   id: 4,
-//   titulo: 'producto 4',
-//   precio: 4000,
-//   stock: 40,
-// })
-
-// console.log(productos)
-
+// Array de productos
 const products = [
   {
     id: 1,
@@ -271,35 +241,3 @@ const products = [
     }
   }
 ]
-
-// console.log(products)
-
-// console.log(document)
-
-const tituloPrincipal = document.getElementById('tituloPrincipal')
-// tituloPrincipal.style.color = 'red'
-// tituloPrincipal.className = 'tituloPrincipal'
-// console.log(tituloPrincipal.className)
-
-// tituloPrincipal.classList.add('grande', 'titulo-fino')
-tituloPrincipal.classList.toggle('dark')
-
-const tieneDarkMode = tituloPrincipal.classList.contains('dark')
-if (tieneDarkMode) {
-  document.body.style.backgroundColor = 'black'
-  tituloPrincipal.style.color = 'white'
-}
-// const lista = document.getElementsByClassName('lista')
-// console.log(lista)
-
-const sections = document.getElementsByTagName('section')
-console.log(sections)
-
-for (let i = 0; i < sections.length; i++) {
-  sections[i].innerHTML = `
-    <div class='card'>
-      <h2>seccion dinamica ${i+1}</h2>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolores, sequi. Soluta necessitatibus magnam harum eum culpa perspiciatis, neque vero aspernatur odio, nemo eius, id tempora inventore fugit adipisci ratione delectus.</p>
-    </div>
-  `
-}
