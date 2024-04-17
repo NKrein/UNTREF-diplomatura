@@ -1,0 +1,76 @@
+body {
+  margin: 0;
+  padding: 1rem;
+  box-sizing: border-box;
+  background-color: bisque;
+  color: darkslategray;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.dark-mode {
+  background-color: darkslategray;
+  color: bisque;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#themeButton {
+  padding: .5rem;
+  margin: 1rem;
+  border: none;
+  border-radius: .5rem;
+}
+
+.light-button {
+  background-color: darkslategray;
+  color: bisque;
+}
+
+.dark-button {
+  background-color: bisque;
+  color: darkslategray;
+}
+
+.info-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.info-section>img {
+  width: 128px;
+  margin: 2rem;
+}
+
+.info-section>div {
+  width: 60%;
+}
+
+.card {
+  margin: 1rem;
+}
+
+.card>h2 {
+  margin: 1rem 0 .5rem;
+}
+
+.card>p {
+  margin: .5rem 0 0;
+}
+
+footer {
+  text-align: center;
+}
+
+@media (max-width: 576px) {
+  .info-section {
+    flex-direction: column;
+  }
+}
