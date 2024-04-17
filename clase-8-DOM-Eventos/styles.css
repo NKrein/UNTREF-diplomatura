@@ -34,3 +34,52 @@
   text-overflow: ellipsis;
   max-width: 100%;
 }
+
+#cartContainer {
+  display: flex;
+  flex-direction: column;
+  margin: 2rem;
+}
+
+.cartCard {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0.5rem;
+  background-color: coral;
+  border-radius: 0.5rem;
+}
+
+.cartCard>img{
+  width: 5rem;
+  height: 5rem;
+  object-fit: cover;
+  border-radius: 0.5rem;
+  margin: 0.5rem;
+}
+
+.cartCard>h3 {
+  font-size: medium;
+  overflow: hidden;
+  white-space: nowrap;  
+  text-overflow: ellipsis;
+  margin: 0 1rem;
+}
+
+.button {
+  margin: 1rem;
+  background-color: beige;
+  color: coral;
+  border: 1px solid coral;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+}
+
+.addButton {
+  margin: 1rem;
+  background-color: beige;
+  color: coral;
+  border: 1px solid coral;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+}
