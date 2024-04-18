@@ -266,13 +266,61 @@ for (const button of addButtons) {
   // }
 
   // Utilizando metodo addEventListener (nombre del evento, sin el "on")
-  button.addEventListener('click', function (){
+  button.addEventListener('click', function () {
     addProduct(productId)
   })
 }
 
-function addProduct (id) {
+function addProduct(id) {
   const index = id - 1
   cart.push(products[index])
-  console.log(cart)
+  showCart()
+}
+
+function removeProduct (prod) {
+  const productIndex = cart.indexOf(prod)
+  cart.splice(productIndex, 1)
+  showCart()
+}
+
+function showCart () {
+  // usamos querySelector para el caso que queramos un solo elemento
+  // usamos querySelectorAll para obtener una lista de elementos
+  // en ambos casos, podemos usar selectores CSS para referenciar los elementos
+  const cartContainer = document.querySelector('#cartContainer')
+  // obtenemos el elemento que queremos quitar
+  const noCart = document.querySelector('.noCart')
+  // eliminamos el elemento mediante el removeChild
+  if (noCart) {
+    cartContainer.removeChild(noCart)
+  }
+
+  // reiniciamos el contenido del contenedor, para vaciarlo
+  cartContainer.innerHTML = ''
+
+  for (const product of cart) {
+    // creamos los nuevos elementos con el metodo createElement, y seteamos sus propiedades
+    const newDiv = document.createElement('div')
+    newDiv.classList.add('cartCard')
+
+    const productTitle = document.createElement('h3')
+    productTitle.innerText = product.title
+
+    const productImage = document.createElement('img')
+    productImage.src = product.image
+    productImage.alt = product.title
+
+    const deleteButton = document.createElement('button')
+    deleteButton.innerText = 'Eliminar'
+    deleteButton.classList.add('button')
+    // asignamos la funcion al evento 'click' del boton nuevo
+    deleteButton.onclick = function () {
+      removeProduct(product)
+    }
+
+    // agregamos todos los nuevos elementos al contenedor div (la card)
+    newDiv.append(productImage, productTitle, deleteButton)
+    // agregamos el div con todo su contenido seteado, dentro del contenedor del carrito (podemos usar append tambien)
+    cartContainer.appendChild(newDiv)
+  }
 }
