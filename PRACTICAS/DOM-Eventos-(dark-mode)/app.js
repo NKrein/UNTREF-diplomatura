@@ -19,3 +19,20 @@ Desafio extra:
   a- Para el caso del dark-mode, usaremos la imagen moon.png
   b- Caso contrario, para el tema claro, usaremos la imagen sun.png
 */
+
+const themeButton = document.querySelector('#themeButton')
+const body = document.body
+const image = document.querySelector('#themeImage')
+
+themeButton.addEventListener('click', function () {
+  body.classList.toggle('dark-mode')
+  if (body.classList.contains('dark-mode')) {
+    // body.classList.remove('dark-mode')
+    themeButton.className = 'dark-button'
+    image.src = './assets/moon.png'
+  } else {
+    // body.classList.add('dark-mode')
+    themeButton.className = 'light-button'
+    image.src = './assets/sun.png'
+  }
+})
