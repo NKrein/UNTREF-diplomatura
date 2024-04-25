@@ -2,7 +2,20 @@ const addButton = document.querySelector('#addButton')
 const taskList = document.querySelector('#taskList')
 const taskInput = document.querySelector('#taskInput')
 
-const tasks = []
+const tasks = [
+  {
+    text: "Aprender HTML",
+    done: false
+  },
+  {
+    text: "Aprender CSS",
+    done: false
+  },
+  {
+    text: "Aprender JavaScript",
+    done: false
+  },
+]
 
 function addTask() {
   const newTask = taskInput.value
@@ -66,4 +79,42 @@ function updateTaskList() {
   }
 }
 
-addButton.onclick = addTask
+// addButton.onclick = addTask
+updateTaskList()
+
+// taskInput.addEventListener('keypress', (event) => {
+//   console.log(event.key)
+//   if(event.key === 'Enter') {
+//     addTask()
+//   }
+// })
+
+const taskForm = document.querySelector('#taskForm')
+taskForm.addEventListener('submit', (e) => {
+  e.preventDefault()
+  addTask()
+})
+
+const errorMessage = document.querySelector('.errorMessage')
+taskInput.addEventListener('input', (event) => {
+  const inputValue = event.target.value
+  if (inputValue.length < 5) {
+    taskInput.classList.add('invalidInput')
+    errorMessage.innerHTML = `Escribe al menos ${5 - inputValue.length} caracteres más.`
+  } else {
+    taskInput.classList.remove('invalidInput')
+    errorMessage.innerHTML = ''
+  }
+})
+
+taskInput.addEventListener('blur', () => {
+  taskInput.classList.remove('invalidInput')
+  errorMessage.innerHTML = ''
+})
+
+const title = document.querySelector('h1')
+window.addEventListener('scroll', (e) => {
+  const actualScroll = window.scrollY
+  const newFontSize = 32 + (actualScroll / 3)
+  title.style.fontSize = newFontSize + 'px'
+})
