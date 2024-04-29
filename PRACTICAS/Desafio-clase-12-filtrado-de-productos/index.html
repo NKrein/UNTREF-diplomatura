@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Trabajando con DOM</title>
+  </head>
+  <body>
+    <h1>Catálogo</h1>
+    <nav id="searchBar">
+      <fieldset>
+        <label for="categoriesSelector">Filtrar por categoría:</label>
+        <select name="categoriesSelector" id="categoriesSelector">
+          <option value="">Ver todo</option>
+          <option value="men's clothing">Ropa Hombre</option>
+          <option value="women's clothing">Ropa Mujer</option>
+          <option value="jewelery">Joyas</option>
+          <option value="electronics">Electrónica</option>
+        </select>  
+      </fieldset>
+      <fieldset>
+        <input id="searchInput" type="text" placeholder="nombre de producto...">
+        <button id="searchButton">Buscar</button>
+      </fieldset>
+    </nav>
+    <section id="productsContainer">
+    </section>
+
+    <footer>Diplomatura Front End - UNTREF</footer>
+    <script src="./app.js"></script>
+  </body>
+</html>

@@ -242,8 +242,6 @@ const products = [
   }
 ]
 
-const cart = []
-
 const productsContainer = document.getElementById('productsContainer')
 
 for (const item of products) {
@@ -255,77 +253,28 @@ for (const item of products) {
   </div>`
 }
 
-const addButtons = document.getElementsByClassName('addButton')
-
-for (const button of addButtons) {
-  const productId = button.getAttribute('data-id')
-  // Utilizando propiedad onclick ("on" + evento)
-  // button.onclick = function () {
-  //   addProduct(productId)
-  // }
-
-  // Utilizando metodo addEventListener (nombre del evento, sin el "on")
-  button.addEventListener('click', function () {
-    addProduct(productId)
-  })
-}
-
-function addProduct(id) {
-  const index = id - 1
-  cart.push(products[index])
-  showCart()
-}
-
-function removeProduct (prod) {
-  const productIndex = cart.indexOf(prod)
-  cart.splice(productIndex, 1)
-  showCart()
-}
-
-function showCart () {
-  // usamos querySelector para el caso que queramos un solo elemento
-  // usamos querySelectorAll para obtener una lista de elementos
-  // en ambos casos, podemos usar selectores CSS para referenciar los elementos
-  const cartContainer = document.querySelector('#cartContainer')
-  // obtenemos el elemento que queremos quitar
-  const noCart = document.querySelector('.noCart')
-  // eliminamos el elemento mediante el removeChild
-  if (noCart) {
-    cartContainer.removeChild(noCart)
-  }
-
-  // reiniciamos el contenido del contenedor, para vaciarlo
-  cartContainer.innerHTML = ''
-
-  for (const product of cart) {
-    // creamos los nuevos elementos con el metodo createElement, y seteamos sus propiedades
-    const newDiv = document.createElement('div')
-    newDiv.classList.add('cartCard')
-
-    const productTitle = document.createElement('h3')
-    productTitle.innerText = product.title
-
-    const productImage = document.createElement('img')
-    productImage.src = product.image
-    productImage.alt = product.title
-
-    const deleteButton = document.createElement('button')
-    deleteButton.innerText = 'Eliminar'
-    deleteButton.classList.add('button')
-    // asignamos la funcion al evento 'click' del boton nuevo
-    deleteButton.onclick = function () {
-      removeProduct(product)
-    }
-
-    // agregamos todos los nuevos elementos al contenedor div (la card)
-    newDiv.append(productImage, productTitle, deleteButton)
-    // agregamos el div con todo su contenido seteado, dentro del contenedor del carrito (podemos usar append tambien)
-    cartContainer.appendChild(newDiv)
-  }
-}
-
 ///////////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////// Ejemplos de clase 12 ////////////////////////////////////
+/////////////////////////////////////// Desafío clase 12 //////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////
+/*
+Consigna: 
+Definir la lógica que nos permita filtrar los productos utilizando el elemento select de la barra de búsqueda.
+Si el usuario selecciona una opción del select, se filtra y se muestran los productos filtrados en el DOM.
 
+Pistas:
+- El select tiene el id "categoriesSelector".
+- Debemos setearle un evento al select que se ejecute cada vez que cambie su valor.
+- Obtenemos el valor del select, utilizando la información del evento que recibimos por parámetro.
+- Filtraremos el array de productos, sin modificar el original, y actualizamos el contenedor de las cards.
+- El valor de cada option, corresponde a las categorías de los productos (propiedad "category" de cada objeto)
 
+Desafío extra:
+Darle funcionalidad al input de la barra de búsqueda, donde el usuario pueda filtrar los productos por su nombre.
+El usuario escribe parte (o la totalidad) del nombre de un producto, y se actualiza el DOM mostrando los que coinciden.
+
+A tener en cuenta:
+1- El input tiene el id "searchInput", y el botón tiene el id "searchButton".
+2- Podemos utilizar el filter, y para buscar coincidencias en el nombre, podemos utilizar el método includes de los string.
+3- Será necesario definir una función que sea ejecutada cuando se dispare el click del botón, leyendo el valor del input.
+4- La idea es no modificar el array original, sino, mostrar en pantalla el array filtrado (nuevo array).
+*/
