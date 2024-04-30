@@ -246,14 +246,14 @@ const cart = []
 
 const productsContainer = document.getElementById('productsContainer')
 
-for (const item of products) {
-  productsContainer.innerHTML += `
-  <div class='card'>
-    <img src='${item.image}' alt='${item.title}'>
-    <h2>${item.title}</h2>
-    <button class='addButton' data-id='${item.id}'>Agregar al carrito</button>
-  </div>`
-}
+// for (const item of products) {
+//   productsContainer.innerHTML += `
+//   <div class='card'>
+//     <img src='${item.image}' alt='${item.title}'>
+//     <h2>${item.title}</h2>
+//     <button class='addButton' data-id='${item.id}'>Agregar al carrito</button>
+//   </div>`
+// }
 
 const addButtons = document.getElementsByClassName('addButton')
 
@@ -276,13 +276,13 @@ function addProduct(id) {
   showCart()
 }
 
-function removeProduct (prod) {
+function removeProduct(prod) {
   const productIndex = cart.indexOf(prod)
   cart.splice(productIndex, 1)
   showCart()
 }
 
-function showCart () {
+function showCart() {
   // usamos querySelector para el caso que queramos un solo elemento
   // usamos querySelectorAll para obtener una lista de elementos
   // en ambos casos, podemos usar selectores CSS para referenciar los elementos
@@ -329,3 +329,73 @@ function showCart () {
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
 
+
+// function contador(fn) {
+//   let numero = 0
+//   return fn(numero)
+// }
+
+// function sumar(n) {
+//   return n + 1
+// }
+
+// function restar(n) {
+//   return n - 1
+// }
+
+// const sumarUno = contador(sumar)
+// console.log(sumarUno)
+
+products.forEach((item, indice, arrayCompleto) => {
+  // console.log(item.title)
+  // console.log('precio ->', item.price)
+  // console.log('precio con iva ->', item.price * 1.21)
+  // console.log('fin de producto ' + indice)
+  // console.log('-------------------')
+  // console.log(arrayCompleto)
+  productsContainer.innerHTML += `
+  <div class='card'>
+    <img src='${item.image}' alt='${item.title}'>
+    <h2>${item.title}</h2>
+    <button class='addButton' data-id='${item.id}'>Agregar al carrito</button>
+  </div>`
+})
+
+const productosConStock = products.map((product) => {
+  const productUpdated = product
+  productUpdated.stock = 10
+  productUpdated.price *= 1.2
+  return productUpdated
+})
+
+// console.log(products)
+// console.log(productosConStock)
+
+const product18 = products.find((item) => {
+  return item.id === 18
+})
+
+// console.log(product18)
+
+const lessThan15 = products.findLast((item) => {
+  return item.price < 15
+})
+
+// console.log(lessThan15)
+
+const electronicsProducts = products.filter((product) => {
+  return product.category === 'electronic'
+})
+
+// console.log(electronicsProducts)
+
+const jackets = products.filter((item) => item.title.includes('Jacket'))
+
+// console.log(jackets)
+console.log(products)
+
+const total = products.reduce((accum, element) => {
+  return accum + element.price
+}, 0)
+
+console.log(total)
