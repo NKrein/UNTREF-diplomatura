@@ -278,3 +278,53 @@ A tener en cuenta:
 3- Será necesario definir una función que sea ejecutada cuando se dispare el click del botón, leyendo el valor del input.
 4- La idea es no modificar el array original, sino, mostrar en pantalla el array filtrado (nuevo array).
 */
+
+const categoriesSelector = document.querySelector('#categoriesSelector')
+
+categoriesSelector.addEventListener('change', function (event) {
+  const selectedCategory = event.target.value
+  if (selectedCategory === '') {
+    productsContainer.innerHTML = ''
+    products.forEach((product) => {
+      productsContainer.innerHTML += `
+      <div class='card'>
+        <img src='${product.image}' alt='${product.title}'>
+        <h2>${product.title}</h2>
+        <button class='addButton' data-id='${product.id}'>Agregar al carrito</button>
+      </div>`  
+    })
+    return
+  }
+  const filteredProducts = products.filter((item) => {
+    return item.category === selectedCategory
+  })
+  productsContainer.innerHTML = ''
+  filteredProducts.forEach((product) => {
+    productsContainer.innerHTML += `
+    <div class='card'>
+      <img src='${product.image}' alt='${product.title}'>
+      <h2>${product.title}</h2>
+      <button class='addButton' data-id='${product.id}'>Agregar al carrito</button>
+    </div>`  
+  })
+})
+
+const searchInput = document.querySelector('#searchInput')
+const searchButton = document.querySelector('#searchButton')
+
+searchButton.addEventListener('click', function (event) {
+  const searchTerm = searchInput.value
+  const filteredProducts = products.filter((item) => {
+    return item.title.toLocaleLowerCase().includes(searchTerm.toLocaleLowerCase())
+  })
+
+  productsContainer.innerHTML = ''
+  filteredProducts.forEach((product) => {
+    productsContainer.innerHTML += `
+    <div class='card'>
+      <img src='${product.image}' alt='${product.title}'>
+      <h2>${product.title}</h2>
+      <button class='addButton' data-id='${product.id}'>Agregar al carrito</button>
+    </div>`  
+  })
+})
