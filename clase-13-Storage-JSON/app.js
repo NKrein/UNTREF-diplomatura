@@ -404,3 +404,31 @@ function showCart() {
 ///////////////////////////////////// Ejemplos de clase 13 ////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
+// Utilizamos el localStorage para "setear" informacion bajo una clave, especificando su valor
+localStorage.setItem('name', 'Nico')
+localStorage.setItem('theme', 'light')
+
+// Obtenemos la informacion del Storage, utilizando la clave como referencia, y nos retorna el valor
+const userName = localStorage.getItem('name')
+const tituloPrincipal = document.querySelector('#tituloPrincipal')
+tituloPrincipal.innerText += `. Bienvenido ${userName}`
+
+// Podemos borrar un dato especifico utilizando la clave como referencia
+localStorage.removeItem('theme')
+
+// Con el metodo clear, estamos borrando toda la informacion del storage del usuario
+// localStorage.clear()
+
+// De la misma manera que trabajamos con el localStorage, podemos trabajar con el sessionStorage
+sessionStorage.setItem('time', '20:35')
+
+// Utilizamos el metodo JSON para trabajar con la informacion y poder guardarla en el storage
+// Usamos el metodo "stringify" para transformar de Objeto JS a JSON
+const productsJSON = JSON.stringify(products)
+console.log(productsJSON)
+
+localStorage.setItem('products', productsJSON)
+
+//De la misma manera, trabajamos con el "parse", pero para pasar de JSON a Objeto JS
+const productsObject = JSON.parse(productsJSON)
+console.log(productsObject)
