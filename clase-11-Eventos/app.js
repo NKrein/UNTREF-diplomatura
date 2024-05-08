@@ -115,6 +115,9 @@ taskInput.addEventListener('blur', () => {
 const title = document.querySelector('h1')
 window.addEventListener('scroll', (e) => {
   const actualScroll = window.scrollY
-  const newFontSize = 32 + (actualScroll / 3)
+  const newFontSize = 32 + (actualScroll / 20)
+  if (newFontSize > 60) {
+    newFontSize = 60
+  }
   title.style.fontSize = newFontSize + 'px'
 })
