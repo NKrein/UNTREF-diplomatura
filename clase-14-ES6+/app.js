@@ -360,8 +360,7 @@ function showCart() {
 // })
 
 // const productosConStock = products.map((product) => {
-//   const productUpdated = product
-//   productUpdated.stock = 10
+//   const productUpdated = { ...product, stock: 10 }
 //   productUpdated.price *= 1.2
 //   return productUpdated
 // })
@@ -435,3 +434,103 @@ function showCart() {
 ///////////////////////////////////// Ejemplos de clase 14 ////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
+const numero = 4
+// let esPar = ''
+
+// if(numero%2 === 0) {
+//   esPar = 'El numero ' + numero + ' es PAR.'
+// } else {
+//   esPar = 'El numero ' + numero + ' NO es PAR.'
+// }
+
+// console.log(esPar)
+
+const esPar = (numero % 2 === 0) ? 'El numero ' + numero + ' es PAR.' : 'El numero ' + numero + ' NO es PAR.'
+// console.log(esPar)
+
+// function dividir(divisor, dividendo) {
+//   // if (dividendo <=0 ) {
+//   //   return 'No se puede dividir por cero.'
+//   // } else {
+//   //   return divisor/dividendo
+//   // }
+//   return dividendo <= 0 ? 'No se puede dividir por cero.' : divisor / dividendo
+// }
+
+// Forma de funcion flecha, con "return" implicito
+// const dividir = (divisor, dividendo) => dividendo <= 0 ? 'No se puede dividir por cero.' : divisor / dividendo
+
+// Forma de funcion flecha, con llaves y en bloque (con return)
+const dividir = (divisor, dividendo) => {
+  return dividendo <= 0 ? 'No se puede dividir por cero.' : divisor / dividendo
+}
+
+const resultado = dividir(8, 4)
+console.log(resultado)
+
+// OPERADOR AND (&&)
+const edad = 22
+const tieneRegistro = true
+
+// if (edad >= 18 && tieneRegistro) {
+//   console.log('Tiene permitido circular.')
+// } else {
+//   console.log('Se labrara una multa, no puede circular.')
+// }
+
+const evaluacion = edad >= 18 && tieneRegistro ? 'Tiene permitido circular.' : 'Se labrara una multa, no puede circular.'
+// console.log(evaluacion)
+
+// OPERADOR OR (||)
+const codigoDescuento = true
+const primeraCompra = false
+const estaLogeado = false
+
+// if ((codigoDescuento || primeraCompra) && estaLogeado) {
+//   console.log('Descuento del 20% en toda la tienda.')
+// } else {
+//   console.log('Precios de lista.')
+// }
+
+
+//SPREAD OPERATOR ...
+const producto = {
+  id: 1,
+  title: "Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops",
+  price: 109.95,
+  description: "Your perfect pack for everyday use and walks in the forest. Stash your laptop (up to 15 inches) in the padded sleeve, your everyday",
+  category: "men's clothing",
+  image: "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg",
+  rating: {
+    rate: 3.9,
+    count: 120
+  }
+}
+
+const productoConStock = {
+  ...producto,
+  stock: 10
+}
+
+console.log(productoConStock)
+console.log(producto)
+
+// SPREAD con funciones
+const numeros = [1, 4, 3]
+
+function sumarTresNumeros(n1, n2, n3) {
+  return n1 + n2 + n3
+}
+
+// const sumaDeNumeros = sumarTresNumeros(numeros[0], numeros[1], numeros[2])
+const sumaDeNumeros = sumarTresNumeros(...numeros)
+console.log(sumaDeNumeros)
+
+// Uso del operador REST (...)
+function sumarNumeros(string, ...numeros) {
+  const sumaTotal = numeros.reduce((acumulador, numero) => acumulador + numero, 0)
+  const mensaje = string + sumaTotal
+  return mensaje
+}
+
+console.log(sumarNumeros('La suma da este resultado: ', 2, 4, 6))
