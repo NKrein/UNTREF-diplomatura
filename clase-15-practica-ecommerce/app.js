@@ -242,7 +242,14 @@ const products = [
   }
 ]
 
-const cart = []
+let cart
+const storageCart = localStorage.getItem('cart')
+if (storageCart) {
+  cart = JSON.parse(storageCart)
+} else {
+  cart = []
+}
+showCart()
 
 const productsContainer = document.getElementById('productsContainer')
 
@@ -271,15 +278,33 @@ for (const button of addButtons) {
 }
 
 function addProduct(id) {
-  const index = id - 1
-  cart.push(products[index])
+  const selectedProduct = products.find((item) => item.id === parseInt(id))
+  const productInCart = cart.find((item) => item.id === parseInt(id))
+  if (productInCart) {
+    productInCart.quantity += 1
+  } else {
+    const newProduct = {
+      quantity: 1,
+      ...selectedProduct
+    }
+    cart.push(newProduct)
+  }
+  updateStorage()
   showCart()
 }
 
 function removeProduct(prod) {
-  const productIndex = cart.indexOf(prod)
-  cart.splice(productIndex, 1)
+  // const productIndex = cart.indexOf(prod)
+  // cart.splice(productIndex, 1)
+  const updatedCart = cart.filter((item) => item.id !== prod.id)
+  cart = [...updatedCart]
+  updateStorage()
   showCart()
+}
+
+function updateStorage() {
+  const storageCart = JSON.stringify(cart)
+  localStorage.setItem('cart', storageCart)
 }
 
 function showCart() {
@@ -287,23 +312,21 @@ function showCart() {
   // usamos querySelectorAll para obtener una lista de elementos
   // en ambos casos, podemos usar selectores CSS para referenciar los elementos
   const cartContainer = document.querySelector('#cartContainer')
-  // obtenemos el elemento que queremos quitar
-  const noCart = document.querySelector('.noCart')
-  // eliminamos el elemento mediante el removeChild
-  if (noCart) {
-    cartContainer.removeChild(noCart)
-  }
 
   // reiniciamos el contenido del contenedor, para vaciarlo
   cartContainer.innerHTML = ''
 
-  for (const product of cart) {
+  cart.forEach((product) => {
     // creamos los nuevos elementos con el metodo createElement, y seteamos sus propiedades
     const newDiv = document.createElement('div')
     newDiv.classList.add('cartCard')
 
     const productTitle = document.createElement('h3')
     productTitle.innerText = product.title
+
+    const productQuantity = document.createElement('span')
+    productQuantity.innerText = 'X' + product.quantity
+
 
     const productImage = document.createElement('img')
     productImage.src = product.image
@@ -313,273 +336,14 @@ function showCart() {
     deleteButton.innerText = 'Eliminar'
     deleteButton.classList.add('button')
     // asignamos la funcion al evento 'click' del boton nuevo
-    deleteButton.onclick = function () {
+    deleteButton.onclick = () => {
       removeProduct(product)
     }
 
     // agregamos todos los nuevos elementos al contenedor div (la card)
-    newDiv.append(productImage, productTitle, deleteButton)
+    newDiv.append(productImage, productTitle, productQuantity, deleteButton)
     // agregamos el div con todo su contenido seteado, dentro del contenedor del carrito (podemos usar append tambien)
     cartContainer.appendChild(newDiv)
-  }
+
+  })
 }
-
-///////////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////// Ejemplos de clase 12 ////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////////
-
-// function contador(fn) {
-//   let numero = 0
-//   return fn(numero)
-// }
-
-// function sumar(n) {
-//   return n + 1
-// }
-
-// function restar(n) {
-//   return n - 1
-// }
-
-// const sumarUno = contador(sumar)
-// console.log(sumarUno)
-
-// products.forEach((item, indice, arrayCompleto) => {
-//   // console.log(item.title)
-//   // console.log('precio ->', item.price)
-//   // console.log('precio con iva ->', item.price * 1.21)
-//   // console.log('fin de producto ' + indice)
-//   // console.log('-------------------')
-//   // console.log(arrayCompleto)
-//   productsContainer.innerHTML += `
-//   <div class='card'>
-//     <img src='${item.image}' alt='${item.title}'>
-//     <h2>${item.title}</h2>
-//     <button class='addButton' data-id='${item.id}'>Agregar al carrito</button>
-//   </div>`
-// })
-
-// const productosConStock = products.map((product) => {
-//   const productUpdated = { ...product, stock: 10 }
-//   productUpdated.price *= 1.2
-//   return productUpdated
-// })
-
-// // console.log(products)
-// // console.log(productosConStock)
-
-// const product18 = products.find((item) => {
-//   return item.id === 18
-// })
-
-// // console.log(product18)
-
-// const lessThan15 = products.findLast((item) => {
-//   return item.price < 15
-// })
-
-// // console.log(lessThan15)
-
-// const electronicsProducts = products.filter((product) => {
-//   return product.category === 'electronic'
-// })
-
-// // console.log(electronicsProducts)
-
-// const jackets = products.filter((item) => item.title.includes('Jacket'))
-
-// // console.log(jackets)
-// console.log(products)
-
-// const total = products.reduce((accum, element) => {
-//   return accum + element.price
-// }, 0)
-
-// console.log(total)
-
-///////////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////// Ejemplos de clase 13 ////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////////
-
-// // Utilizamos el localStorage para "setear" informacion bajo una clave, especificando su valor
-// localStorage.setItem('name', 'Nico')
-// localStorage.setItem('theme', 'light')
-
-// // Obtenemos la informacion del Storage, utilizando la clave como referencia, y nos retorna el valor
-// const userName = localStorage.getItem('name')
-// const tituloPrincipal = document.querySelector('#tituloPrincipal')
-// tituloPrincipal.innerText += `. Bienvenido ${userName}`
-
-// // Podemos borrar un dato especifico utilizando la clave como referencia
-// localStorage.removeItem('theme')
-
-// // Con el metodo clear, estamos borrando toda la informacion del storage del usuario
-// // localStorage.clear()
-
-// // De la misma manera que trabajamos con el localStorage, podemos trabajar con el sessionStorage
-// sessionStorage.setItem('time', '20:35')
-
-// // Utilizamos el metodo JSON para trabajar con la informacion y poder guardarla en el storage
-// // Usamos el metodo "stringify" para transformar de Objeto JS a JSON
-// const productsJSON = JSON.stringify(products)
-// console.log(productsJSON)
-
-// localStorage.setItem('products', productsJSON)
-
-// //De la misma manera, trabajamos con el "parse", pero para pasar de JSON a Objeto JS
-// const productsObject = JSON.parse(productsJSON)
-// console.log(productsObject)
-
-///////////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////// Ejemplos de clase 14 ////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////////
-
-const numero = 4
-// let esPar = ''
-
-// if(numero%2 === 0) {
-//   esPar = 'El numero ' + numero + ' es PAR.'
-// } else {
-//   esPar = 'El numero ' + numero + ' NO es PAR.'
-// }
-
-// console.log(esPar)
-
-const esPar = (numero % 2 === 0) ? 'El numero ' + numero + ' es PAR.' : 'El numero ' + numero + ' NO es PAR.'
-// console.log(esPar)
-
-// function dividir(divisor, dividendo) {
-//   // if (dividendo <=0 ) {
-//   //   return 'No se puede dividir por cero.'
-//   // } else {
-//   //   return divisor/dividendo
-//   // }
-//   return dividendo <= 0 ? 'No se puede dividir por cero.' : divisor / dividendo
-// }
-
-// Forma de funcion flecha, con "return" implicito
-// const dividir = (divisor, dividendo) => dividendo <= 0 ? 'No se puede dividir por cero.' : divisor / dividendo
-
-// Forma de funcion flecha, con llaves y en bloque (con return)
-const dividir = (divisor, dividendo) => {
-  return dividendo <= 0 ? 'No se puede dividir por cero.' : divisor / dividendo
-}
-
-const resultado = dividir(8, 4)
-// console.log(resultado)
-
-// OPERADOR AND (&&)
-const edad = 22
-const tieneRegistro = true
-
-// if (edad >= 18 && tieneRegistro) {
-//   console.log('Tiene permitido circular.')
-// } else {
-//   console.log('Se labrara una multa, no puede circular.')
-// }
-
-const evaluacion = edad >= 18 && tieneRegistro ? 'Tiene permitido circular.' : 'Se labrara una multa, no puede circular.'
-// console.log(evaluacion)
-
-// OPERADOR OR (||)
-const codigoDescuento = true
-const primeraCompra = false
-const estaLogeado = false
-
-// if ((codigoDescuento || primeraCompra) && estaLogeado) {
-//   console.log('Descuento del 20% en toda la tienda.')
-// } else {
-//   console.log('Precios de lista.')
-// }
-
-
-//SPREAD OPERATOR ...
-const producto = {
-  id: 1,
-  title: "Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops",
-  price: 109.95,
-  description: "Your perfect pack for everyday use and walks in the forest. Stash your laptop (up to 15 inches) in the padded sleeve, your everyday",
-  category: "men's clothing",
-  image: "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg",
-  rating: {
-    rate: 3.9,
-    count: 120
-  }
-}
-
-const productoConStock = {
-  ...producto,
-  stock: 10
-}
-
-// console.log(productoConStock)
-// console.log(producto)
-
-// SPREAD con funciones
-const numeros = [1, 4, 3]
-
-function sumarTresNumeros(n1, n2, n3) {
-  return n1 + n2 + n3
-}
-
-// const sumaDeNumeros = sumarTresNumeros(numeros[0], numeros[1], numeros[2])
-const sumaDeNumeros = sumarTresNumeros(...numeros)
-// console.log(sumaDeNumeros)
-
-// Uso del operador REST (...)
-function sumarNumeros(string, ...numeros) {
-  const sumaTotal = numeros.reduce((acumulador, numero) => acumulador + numero, 0)
-  const mensaje = string + sumaTotal
-  return mensaje
-}
-
-// console.log(sumarNumeros('La suma da este resultado: ', 2, 4, 6))
-
-
-// Uso del operador Nullish ??
-// const user = prompt('Ingrese su nombre')
-
-// const userName = user ?? 'Usuario anonimo'
-
-// console.log(userName)
-
-
-// Uso del operador Optional Chaning (Encadenamiento opcional) ?.
-// const userData = {
-//   name: 'Juan',
-// }
-
-// console.log(userData.shipping?.address)
-
-
-// Uso de Destructuring (Desestructuracion)
-// Con objetos
-const userData = {
-  name: 'Juan',
-  shipping: {
-    PC: 5000,
-    address: 'Calle 1002'
-  }
-}
-
-// const name = userData.name
-// const shipping = userData.shipping
-
-//Uso de alias en la propiedad 'name'. Se usa con los dos puntos :
-const { name: userName, shipping, value } = userData
-
-// console.log(name)
-// console.log(shipping)
-
-// Con arrays
-
-const nombres = ['Raul', 'Eduardo', 'Valeria']
-
-// const nombre1 = nombres[0]
-// const nombre2 = nombres[1]
-// const nombre3 = nombres[2]
-
-const [ nombre1, ...otrosNombres ] = nombres
-
-console.log(nombre1)
-console.log(otrosNombres)
