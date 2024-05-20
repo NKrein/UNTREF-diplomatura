@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./styles.css">
+  <title>TODO app</title>
+</head>
+
+<body>
+  <header class="heroSection">
+  </header>
+  <h1>Lista de Tareas</h1>
+  <main>
+    <form id="taskForm">
+      <input type="text" minlength="5" id="taskInput" placeholder="Nueva tarea">
+      <span class="errorMessage"></span>
+      <button type="submit" id="addButton">Agregar Tarea</button>
+    </form>
+    <ul id="taskList"></ul>  
+  </main>
+  <footer>Diplomatura Front End - UNTREF</footer>
+  <script src="./app.js"></script>
+</body>
+
+</html>
