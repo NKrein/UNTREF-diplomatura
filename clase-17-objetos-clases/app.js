@@ -417,3 +417,121 @@ function showCart() {
 //     }
 //   }
 // });
+
+
+function Persona(name, age) {
+  this.nombre = name
+  this.edad = age
+  this.saludar = function () {
+    console.log(`Hola, soy ${this.nombre}. Tengo ${this.edad} años.`)
+  }
+}
+
+// const persona1 = {
+//   nombre: 'Juan',
+//   edad: 30
+// }
+
+const persona2 = {
+  nombre: 'Maria',
+  edad: 25
+}
+
+const persona1 = new Persona('Juan', 30)
+// const persona2 = new Persona('Maria', 25)
+// console.log(persona1)
+// console.log(persona2)
+
+// persona1.saludar()
+// persona2.saludar()
+
+// Definiendo funcion constructora para carrito
+
+function Cart() {
+  const storageCart = localStorage.getItem('cart')
+  this.cart = storageCart ? JSON.parse(storageCart) : []
+  this.addToCart = function (id) {
+    const selectedProduct = products.find((item) => item.id === parseInt(id))
+    const productInCart = this.cart.find((item) => item.id === parseInt(id))
+    if (productInCart) {
+      productInCart.quantity += 1
+    } else {
+      const newProduct = {
+        quantity: 1,
+        ...selectedProduct
+      }
+      this.cart.push(newProduct)
+    }
+    updateStorage()
+    showCart()
+    Swal.fire({
+      icon: 'success',
+      text: 'Producto agregado.',
+      position: 'bottom-end',
+      background: "#ffe4c4",
+      color: "#2f4f4f",
+      timer: 3000,
+      showConfirmButton: false,
+      toast: true
+    })
+  }
+  this.removeProduct = function (prod) {
+    const updatedCart = this.cart.filter((item) => item.id !== prod.id)
+    this.cart = [...updatedCart]
+    updateStorage()
+    showCart()
+    Swal.fire({
+      icon: 'warning',
+      text: 'Producto eliminado.',
+      position: 'bottom-end',
+      background: "#ffe4c4",
+      color: "#2f4f4f",
+      timer: 3000,
+      showConfirmButton: false,
+      toast: true
+    })
+
+  }
+}
+
+const carrito = new Cart()
+carrito.cart
+carrito.addToCart(3)
+
+// Contexto this en diferentes definiciones
+
+// function Mascota(nombre, tipo, edad) {
+//   this.nombre = nombre
+//   this.tipo = tipo
+//   this.edad = edad
+//   this.hablar = () => {
+//     console.log(`${this.nombre} esta ladrando`)
+//   }
+// }
+
+// const perro = new Mascota('Pedro', 'perro', 10)
+// perro.hablar()
+
+const perro = {
+  nombre: 'Pedro',
+  hablar: () => {
+    console.log(`${this.nombre} esta ladrando`)
+  }
+}
+
+perro.hablar()
+
+class PersonaClass {
+  constructor(nombre, edad) {
+    this.nombre = nombre
+    this.edad = edad
+    this.ocupacion = 'programador'
+  }
+
+  saludar() {
+    console.log(`Hola, soy ${this.nombre}. Tengo ${this.edad} años.`)
+  }
+}
+
+const persona3 = new PersonaClass('Diego', 12)
+persona3.saludar()
