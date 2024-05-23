@@ -635,4 +635,3 @@ recibirProductos
   console.log('El valor de PI:', Math.PI)
   console.log('El valor de la constante E (euler):', Math.E)
   console.log('9 elevado a la 3:', Math.pow(9,3))
-
