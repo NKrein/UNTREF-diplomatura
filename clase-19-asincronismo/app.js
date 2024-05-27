@@ -644,3 +644,5 @@ recibirProductos
   const meses = ['enero', 'febrero', 'marzo', 'abril', 'mayo', '...']
   console.log(fecha.getMonth())
   console.log(meses[fecha.getMonth()])
+
+  ////////////////////////////////////////////// Clase 19 //////////////////////////////////////////////
