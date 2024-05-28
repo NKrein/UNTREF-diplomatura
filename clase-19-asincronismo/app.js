@@ -597,15 +597,15 @@ class CartClass {
 // PROMESAS
 // Definicion
 const recibirProductos = new Promise((response, reject) => {
-  const autorizacion = false
+  const autorizacion = true
   if (autorizacion) {
     setTimeout(() => {
       response(products)
-    }, 1000)  
+    }, 2000)
   } else {
     setTimeout(() => {
       reject(new Error('No tiene autorizacion para acceder a la informacion.'))
-    }, 1000)  
+    }, 2000)
   }
 })
 
@@ -621,28 +621,87 @@ recibirProductos
     // console.log('Se termino el proceso asincrono')
   })
 
-  // Objeto Math
-  const numeroAleatorio = Math.random()
-  // console.log(numeroAleatorio)
+// Objeto Math
+const numeroAleatorio = Math.random()
+// console.log(numeroAleatorio)
 
-  // console.log('Redondeando 4.5 con round:', Math.round(4.5))
-  // console.log('Redondeando 4.5 con floor:', Math.floor(4.5))
-  // console.log('Redondeando 4.3 con ceil:', Math.ceil(4.3))
-  // console.log('Valor absoluto (quita el signo):', Math.abs(-4))
+// console.log('Redondeando 4.5 con round:', Math.round(4.5))
+// console.log('Redondeando 4.5 con floor:', Math.floor(4.5))
+// console.log('Redondeando 4.3 con ceil:', Math.ceil(4.3))
+// console.log('Valor absoluto (quita el signo):', Math.abs(-4))
 
-  // console.log('El menor de 10, 43, 18 es:', Math.min(10, 43, 18))
-  // console.log('El mayor de 10, 43, 18 es:', Math.max(10, 43, 18))
-  // console.log('El valor de PI:', Math.PI)
-  // console.log('El valor de la constante E (euler):', Math.E)
-  // console.log('9 elevado a la 3:', Math.pow(9,3))
+// console.log('El menor de 10, 43, 18 es:', Math.min(10, 43, 18))
+// console.log('El mayor de 10, 43, 18 es:', Math.max(10, 43, 18))
+// console.log('El valor de PI:', Math.PI)
+// console.log('El valor de la constante E (euler):', Math.E)
+// console.log('9 elevado a la 3:', Math.pow(9,3))
 
-  // Clase Date
-  const fecha = new Date
-  console.log(fecha.toLocaleDateString())
-  console.log(fecha.toLocaleTimeString())
-  console.log(fecha.getFullYear())
-  const meses = ['enero', 'febrero', 'marzo', 'abril', 'mayo', '...']
-  console.log(fecha.getMonth())
-  console.log(meses[fecha.getMonth()])
+// Clase Date
+const fecha = new Date
+// console.log(fecha.toLocaleDateString())
+// console.log(fecha.toLocaleTimeString())
+// console.log(fecha.getFullYear())
+const meses = ['enero', 'febrero', 'marzo', 'abril', 'mayo', '...']
+// console.log(fecha.getMonth())
+// console.log(meses[fecha.getMonth()])
 
-  ////////////////////////////////////////////// Clase 19 //////////////////////////////////////////////
+////////////////////////////////////////////// Clase 19 //////////////////////////////////////////////
+
+// setTimeout
+
+const delay = setTimeout(() => {
+  console.log('mensaje despues de 3 seg.')
+}, 3000)
+
+clearTimeout(delay)
+
+// setIntervar
+
+// const reloj = setInterval(() => {
+//   console.log(new Date().getSeconds())
+// }, 1000)
+
+// setTimeout(() => {
+//   clearInterval(reloj)
+//   console.log('Pasaron 5 segundos y cancelamos el reloj')
+// }, 5000)
+
+// Usando async/await VS promesas
+
+// La utilizacion de la promesa
+recibirProductos
+  .then((productos) => {
+    console.log(productos)
+  })
+  .catch((error) => {
+    console.error('Ocurrio algo inesperado: ', error)
+  })
+  .finally(() => {
+    // console.log('Se termino el proceso asincrono')
+  })
+
+// La utilizacion de async/await
+
+// const getProducts = async () => {
+//   try {
+//     const productos = await recibirProductos
+//     console.log(productos)
+//   } catch (error) {
+//     console.error('Ocurrio algo inesperado: ', error)
+//   } finally {
+//     // console.log('Se termino el proceso asincrono')
+//   }
+// }
+
+async function getProducts() {
+  try {
+    const productos = await recibirProductos
+    console.log(productos)
+  } catch (error) {
+    console.error('Ocurrio algo inesperado: ', error)
+  } finally {
+    // console.log('Se termino el proceso asincrono')
+  }
+}
+
+getProducts()
