@@ -242,317 +242,21 @@ const products = [
   }
 ]
 
-//////////////////////////////////////////////////////////////////////////////
+class Cart {
+  // Propiedad privada
+  #storageCart = localStorage.getItem('cart')
 
-let cart
-const storageCart = localStorage.getItem('cart')
-if (storageCart) {
-  cart = JSON.parse(storageCart)
-} else {
-  cart = []
-}
-showCart()
-
-const productsContainer = document.getElementById('productsContainer')
-
-for (const item of products) {
-  productsContainer.innerHTML += `
-  <div class='card'>
-    <img src='${item.image}' alt='${item.title}'>
-    <h2>${item.title}</h2>
-    <button class='addButton' data-id='${item.id}'>Agregar al carrito</button>
-  </div>`
-}
-
-const addButtons = document.getElementsByClassName('addButton')
-
-for (const button of addButtons) {
-  const productId = button.getAttribute('data-id')
-  // Utilizando propiedad onclick ("on" + evento)
-  // button.onclick = function () {
-  //   addProduct(productId)
-  // }
-
-  // Utilizando metodo addEventListener (nombre del evento, sin el "on")
-  button.addEventListener('click', function () {
-    addProduct(productId)
-  })
-}
-
-function addProduct(id) {
-  const selectedProduct = products.find((item) => item.id === parseInt(id))
-  const productInCart = cart.find((item) => item.id === parseInt(id))
-  if (productInCart) {
-    productInCart.quantity += 1
-  } else {
-    const newProduct = {
-      quantity: 1,
-      ...selectedProduct
-    }
-    cart.push(newProduct)
-  }
-  updateStorage()
-  showCart()
-  Swal.fire({
-    icon: 'success',
-    text: 'Producto agregado.',
-    position: 'bottom-end',
-    background: "#ffe4c4",
-    color: "#2f4f4f",
-    timer: 3000,
-    showConfirmButton: false,
-    toast: true
-  })
-}
-
-function removeProduct(prod) {
-  // const productIndex = cart.indexOf(prod)
-  // cart.splice(productIndex, 1)
-  const updatedCart = cart.filter((item) => item.id !== prod.id)
-  cart = [...updatedCart]
-  updateStorage()
-  showCart()
-  Swal.fire({
-    icon: 'warning',
-    text: 'Producto eliminado.',
-    position: 'bottom-end',
-    background: "#ffe4c4",
-    color: "#2f4f4f",
-    timer: 3000,
-    showConfirmButton: false,
-    toast: true
-  })
-}
-
-function updateStorage() {
-  const storageCart = JSON.stringify(cart)
-  localStorage.setItem('cart', storageCart)
-}
-
-function showCart() {
-  // usamos querySelector para el caso que queramos un solo elemento
-  // usamos querySelectorAll para obtener una lista de elementos
-  // en ambos casos, podemos usar selectores CSS para referenciar los elementos
-  const cartContainer = document.querySelector('#cartContainer')
-
-  // reiniciamos el contenido del contenedor, para vaciarlo
-  cartContainer.innerHTML = ''
-
-  cart.forEach((product) => {
-    // creamos los nuevos elementos con el metodo createElement, y seteamos sus propiedades
-    const newDiv = document.createElement('div')
-    newDiv.classList.add('cartCard')
-
-    const productTitle = document.createElement('h3')
-    productTitle.innerText = product.title
-
-    const productQuantity = document.createElement('span')
-    productQuantity.innerText = 'X' + product.quantity
-
-
-    const productImage = document.createElement('img')
-    productImage.src = product.image
-    productImage.alt = product.title
-
-    const deleteButton = document.createElement('button')
-    deleteButton.innerText = 'Eliminar'
-    deleteButton.classList.add('button')
-    // asignamos la funcion al evento 'click' del boton nuevo
-    deleteButton.onclick = () => {
-      removeProduct(product)
-    }
-
-    // agregamos todos los nuevos elementos al contenedor div (la card)
-    newDiv.append(productImage, productTitle, productQuantity, deleteButton)
-    // agregamos el div con todo su contenido seteado, dentro del contenedor del carrito (podemos usar append tambien)
-    cartContainer.appendChild(newDiv)
-
-  })
-}
-
-
-// Ejemplo de clase, de uso del alert 
-// Swal.fire({
-//   title: '<h2><i>Bienvenida<i><h2>',
-//   text: 'a nuestro ecommerce',
-//   icon: 'compra',
-//   footer: 'Compra rapido y seguro',
-//   confirmButtonText: '¡Muchas gracias!',
-//   showCloseButton: true,
-//   showCancelButton: true,
-//   focusConfirm: false,
-//   position: 'center',
-//   // imageUrl: "https://unsplash.it/400/400",
-//   // imageWidth: 400,
-//   // imageHeight: 400,
-//   // imageAlt: "Custom image",
-//   html: '<image src="https://unsplash.it/400/400" alt="Custom image" />',
-//   color: "#2f4f4f",
-//   background: "#ffe4c4",
-//   backdrop: `
-//     rgba(0,0,123,0.4)
-//     url("/images/nyan-cat.gif")
-//     left top
-//     no-repeat
-//   `,
-//   confirmButtonColor: "#2f4f4f"
-
-// })
-
-// const ctx = document.getElementById('myChart');
-
-// new Chart(ctx, {
-//   type: 'doughnut',
-//   data: {
-//     labels: ['vendido', 'en stock',],
-//     datasets: [{
-//       label: '# de productos',
-//       data: [12, 19],
-//       borderWidth: 1
-//     }]
-//   },
-//   options: {
-//     scales: {
-//       y: {
-//         beginAtZero: true
-//       }
-//     }
-//   }
-// });
-
-
-function Persona(name, age) {
-  this.nombre = name
-  this.edad = age
-  this.saludar = function () {
-    console.log(`Hola, soy ${this.nombre}. Tengo ${this.edad} años.`)
-  }
-}
-
-// const persona1 = {
-//   nombre: 'Juan',
-//   edad: 30
-// }
-
-const persona2 = {
-  nombre: 'Maria',
-  edad: 25
-}
-
-const persona1 = new Persona('Juan', 30)
-// const persona2 = new Persona('Maria', 25)
-// console.log(persona1)
-// console.log(persona2)
-
-// persona1.saludar()
-// persona2.saludar()
-
-// Contexto this en diferentes definiciones
-
-// function Mascota(nombre, tipo, edad) {
-//   this.nombre = nombre
-//   this.tipo = tipo
-//   this.edad = edad
-//   this.hablar = () => {
-//     console.log(`${this.nombre} esta ladrando`)
-//   }
-// }
-
-// const perro = new Mascota('Pedro', 'perro', 10)
-// perro.hablar()
-
-// const perro = {
-//   nombre: 'Pedro',
-//   hablar: () => {
-//     console.log(`${this.nombre} esta ladrando`)
-//   }
-// }
-
-// perro.hablar()
-
-// class PersonaClass {
-//   constructor(nombre, edad) {
-//     this.nombre = nombre
-//     this.edad = edad
-//     this.ocupacion = 'programador'
-//   }
-
-//   saludar() {
-//     console.log(`Hola, soy ${this.nombre}. Tengo ${this.edad} años.`)
-//   }
-// }
-
-// const persona3 = new PersonaClass('Diego', 12)
-// persona3.saludar()
-
-// Definiendo funcion constructora para carrito
-function Cart() {
-
-  const storageCart = localStorage.getItem('cart')
-
-  this.cart = storageCart ? JSON.parse(storageCart) : []
-
-  this.addToCart = function (id) {
-    const selectedProduct = products.find((item) => item.id === parseInt(id))
-    const productInCart = this.cart.find((item) => item.id === parseInt(id))
-    if (productInCart) {
-      productInCart.quantity += 1
-    } else {
-      const newProduct = {
-        quantity: 1,
-        ...selectedProduct
-      }
-      this.cart.push(newProduct)
-    }
-    updateStorage()
-    showCart()
-    Swal.fire({
-      icon: 'success',
-      text: 'Producto agregado.',
-      position: 'bottom-end',
-      background: "#ffe4c4",
-      color: "#2f4f4f",
-      timer: 3000,
-      showConfirmButton: false,
-      toast: true
-    })
-  }
-
-  this.removeProduct = function (prod) {
-    const updatedCart = this.cart.filter((item) => item.id !== prod.id)
-    this.cart = [...updatedCart]
-    updateStorage()
-    showCart()
-    Swal.fire({
-      icon: 'warning',
-      text: 'Producto eliminado.',
-      position: 'bottom-end',
-      background: "#ffe4c4",
-      color: "#2f4f4f",
-      timer: 3000,
-      showConfirmButton: false,
-      toast: true
-    })
-
-  }
-}
-
-const carrito = new Cart()
-carrito.cart
-carrito.addToCart(3)
-
-
-// Definiendo clase para carrito
-
-class CartClass {
-
+  // Definimos las propiedades de la clase
   constructor() {
-    this.cart = storageCart ? JSON.parse(storageCart) : []
+    this.items = this.#storageCart ? JSON.parse(this.#storageCart) : []
+    this.total = this.items.reduce((acum, item)=> acum + (item.price * item.quantity), 0)
+    this.time = new Date
   }
 
-  addToCart(id) {
+  // Definimos los metodos de la clase
+  addProduct(id) {
     const selectedProduct = products.find((item) => item.id === parseInt(id))
-    const productInCart = this.cart.find((item) => item.id === parseInt(id))
+    const productInCart = this.items.find((item) => item.id === parseInt(id))
     if (productInCart) {
       productInCart.quantity += 1
     } else {
@@ -560,10 +264,14 @@ class CartClass {
         quantity: 1,
         ...selectedProduct
       }
-      this.cart.push(newProduct)
+      this.items.push(newProduct)
     }
-    updateStorage()
-    showCart()
+    const total = this.items.reduce((acum, current) => {
+      return acum + (current.price * current.quantity)
+    }, 0)
+    this.total = total
+    this.updateStorage()
+    this.showCart()
     Swal.fire({
       icon: 'success',
       text: 'Producto agregado.',
@@ -577,10 +285,14 @@ class CartClass {
   }
 
   removeProduct(prod) {
-    const updatedCart = this.cart.filter((item) => item.id !== prod.id)
-    this.cart = [...updatedCart]
-    updateStorage()
-    showCart()
+    const updatedCart = this.items.filter((item) => item.id !== prod.id)
+    this.items = [...updatedCart]
+    const total = this.items.reduce((acum, current) => {
+      return acum + (current.price * current.quantity)
+    }, 0)
+    this.total = total
+    this.updateStorage()
+    this.showCart()
     Swal.fire({
       icon: 'warning',
       text: 'Producto eliminado.',
@@ -592,118 +304,83 @@ class CartClass {
       toast: true
     })
   }
+
+  updateStorage() {
+    const storageCart = JSON.stringify(this.items)
+    localStorage.setItem('cart', storageCart)
+  }
+
+  showCart() {
+    const cartContainer = document.querySelector('#cartContainer')
+    cartContainer.innerHTML = ''
+    this.items.forEach((product) => {
+      const newDiv = document.createElement('div')
+      newDiv.classList.add('cartCard')
+
+      const productTitle = document.createElement('h3')
+      productTitle.innerText = product.title
+
+      const productQuantity = document.createElement('span')
+      productQuantity.innerText = 'X' + product.quantity
+
+
+      const productImage = document.createElement('img')
+      productImage.src = product.image
+      productImage.alt = product.title
+
+      const deleteButton = document.createElement('button')
+      deleteButton.innerText = 'Eliminar'
+      deleteButton.classList.add('button')
+      // asignamos la funcion al evento 'click' del boton nuevo
+      deleteButton.onclick = () => {
+        this.removeProduct(product)
+      }
+
+      // agregamos todos los nuevos elementos al contenedor div (la card)
+      newDiv.append(productImage, productTitle, productQuantity, deleteButton)
+      // agregamos el div con todo su contenido seteado, dentro del contenedor del carrito (podemos usar append tambien)
+      cartContainer.appendChild(newDiv)
+
+    })
+  }
+
 }
 
-////////////////////////////////////////////// Clase 18 //////////////////////////////////////////////
+const carrito = new Cart()
 
-// PROMESAS
-// Definicion
-const recibirProductos = new Promise((response, reject) => {
-  const autorizacion = true
-  if (autorizacion) {
-    setTimeout(() => {
-      response(products)
-    }, 2000)
-  } else {
-    setTimeout(() => {
-      reject(new Error('No tiene autorizacion para acceder a la informacion.'))
-    }, 2000)
-  }
+// Definicion de la promesa
+const promesaProductos = new Promise((response, reject) => {
+  setTimeout(() => {
+    response(products)
+  }, 2000)
 })
 
-// La utilizacion de la promesa
-recibirProductos
-  .then((productos) => {
-    // console.log(productos)
-  })
-  .catch((error) => {
-    // console.error('Ocurrio algo inesperado: ', error)
-  })
-  .finally(() => {
-    // console.log('Se termino el proceso asincrono')
-  })
-
-// Objeto Math
-const numeroAleatorio = Math.random()
-// console.log(numeroAleatorio)
-
-// console.log('Redondeando 4.5 con round:', Math.round(4.5))
-// console.log('Redondeando 4.5 con floor:', Math.floor(4.5))
-// console.log('Redondeando 4.3 con ceil:', Math.ceil(4.3))
-// console.log('Valor absoluto (quita el signo):', Math.abs(-4))
-
-// console.log('El menor de 10, 43, 18 es:', Math.min(10, 43, 18))
-// console.log('El mayor de 10, 43, 18 es:', Math.max(10, 43, 18))
-// console.log('El valor de PI:', Math.PI)
-// console.log('El valor de la constante E (euler):', Math.E)
-// console.log('9 elevado a la 3:', Math.pow(9,3))
-
-// Clase Date
-const fecha = new Date
-// console.log(fecha.toLocaleDateString())
-// console.log(fecha.toLocaleTimeString())
-// console.log(fecha.getFullYear())
-const meses = ['enero', 'febrero', 'marzo', 'abril', 'mayo', '...']
-// console.log(fecha.getMonth())
-// console.log(meses[fecha.getMonth()])
-
-////////////////////////////////////////////// Clase 19 //////////////////////////////////////////////
-
-// setTimeout
-
-const delay = setTimeout(() => {
-  console.log('mensaje despues de 3 seg.')
-}, 3000)
-
-clearTimeout(delay)
-
-// setIntervar
-
-// const reloj = setInterval(() => {
-//   console.log(new Date().getSeconds())
-// }, 1000)
-
-// setTimeout(() => {
-//   clearInterval(reloj)
-//   console.log('Pasaron 5 segundos y cancelamos el reloj')
-// }, 5000)
-
-// Usando async/await VS promesas
-
-// La utilizacion de la promesa
-recibirProductos
-  .then((productos) => {
-    console.log(productos)
-  })
-  .catch((error) => {
-    console.error('Ocurrio algo inesperado: ', error)
-  })
-  .finally(() => {
-    // console.log('Se termino el proceso asincrono')
-  })
-
-// La utilizacion de async/await
-
-// const getProducts = async () => {
-//   try {
-//     const productos = await recibirProductos
-//     console.log(productos)
-//   } catch (error) {
-//     console.error('Ocurrio algo inesperado: ', error)
-//   } finally {
-//     // console.log('Se termino el proceso asincrono')
-//   }
-// }
-
-async function getProducts() {
+// Utilizar la promesa
+async function inicializarCatalogo() {
   try {
-    const productos = await recibirProductos
-    console.log(productos)
+    const productos = await promesaProductos
+    const productsContainer = document.querySelector('#productsContainer')
+    productsContainer.innerHTML = ''
+    productos.forEach((item) => {
+      productsContainer.innerHTML += `
+        <div class='card'>
+          <img src='${item.image}' alt='${item.title}'>
+          <h2>${item.title}</h2>
+          <button class='addButton' data-id='${item.id}'>Agregar al carrito</button>
+        </div>`
+    })
+    const addButtons = document.querySelectorAll('.addButton')
+    for (const button of addButtons) {
+      const productId = button.getAttribute('data-id')
+      button.addEventListener('click', function () {
+        carrito.addProduct(productId)
+      })
+    }
+    carrito.showCart()
   } catch (error) {
-    console.error('Ocurrio algo inesperado: ', error)
-  } finally {
-    // console.log('Se termino el proceso asincrono')
+    console.error('Error al obtener los productos', error)
   }
 }
 
-getProducts()
+// Iniciamos el catalogo
+inicializarCatalogo()
