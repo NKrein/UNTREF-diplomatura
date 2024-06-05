@@ -1,0 +1,180 @@
+body {
+  min-height: 100vh;
+  background-color: bisque;
+  color: darkslategray;
+  display: flex;
+  flex-direction: column;
+}
+
+#productsContainer {
+  display: flex;
+  flex-grow: 2;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+  justify-content: center;
+  margin: 0 1rem;
+}
+
+.card {
+  width: 12rem;
+  height: 18rem;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  background-color: burlywood;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.card>img {
+  width: 10rem;
+  height: 10rem;
+  object-fit: cover;
+  border-radius: 0.5rem;
+}
+
+.card>h2 {
+  font-size: 1.1rem;
+  font-weight: normal;
+  text-align: center;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+#cartContainer {
+  display: flex;
+  flex-direction: column;
+  margin: 2rem;
+}
+
+.cartCard {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0.5rem;
+  background-color: burlywood;
+  border-radius: 0.5rem;
+}
+
+.cartCard>img {
+  width: 5rem;
+  height: 5rem;
+  object-fit: cover;
+  border-radius: 0.5rem;
+  margin: 0.5rem;
+}
+
+.cartCard>h3 {
+  font-size: medium;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  margin: 0 1rem;
+}
+
+.button {
+  margin: 1rem;
+  background-color: bisque;
+  color: darkslategray;
+  border: 1px solid darkslategray;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+}
+
+.addButton {
+  margin: 1rem;
+  background-color: bisque;
+  color: darkslategray;
+  border: 1px solid darkslategray;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+}
+
+footer {
+  text-align: center;
+  margin: 1rem 0 0;
+}
+
+#searchBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: .5rem;
+  flex-wrap: wrap;
+  margin: 1rem;
+  background-color: burlywood;
+  border-radius: 0.5rem;
+}
+
+#searchBar>fieldset {
+  border: none;
+}
+
+#searchBar button {
+  background-color: bisque;
+  color: darkslategray;
+  border: 1px solid darkslategray;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+}
+
+input,
+select {
+  padding: .5rem 1rem;
+  margin: 0 .5rem;
+  border-radius: .5rem;
+  border: none;
+}
+
+.loader {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  position: relative;
+  animation: rotate 1s linear infinite
+}
+
+.loader::before,
+.loader::after {
+  content: "";
+  box-sizing: border-box;
+  position: absolute;
+  inset: 0px;
+  border-radius: 50%;
+  border: 5px solid #FFF;
+  animation: prixClipFix 2s linear infinite;
+}
+
+.loader::after {
+  transform: rotate3d(90, 90, 0, 180deg);
+  border-color: #FF3D00;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg)
+  }
+
+  100% {
+    transform: rotate(360deg)
+  }
+}
+
+@keyframes prixClipFix {
+  0% {
+    clip-path: polygon(50% 50%, 0 0, 0 0, 0 0, 0 0, 0 0)
+  }
+
+  50% {
+    clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 0, 100% 0, 100% 0)
+  }
+
+  75%,
+  100% {
+    clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 100%, 100% 100%, 100% 100%)
+  }
+}
