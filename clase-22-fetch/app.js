@@ -249,7 +249,7 @@ class Cart {
   // Definimos las propiedades de la clase
   constructor() {
     this.items = this.#storageCart ? JSON.parse(this.#storageCart) : []
-    this.total = this.items.reduce((acum, item)=> acum + (item.price * item.quantity), 0)
+    this.total = this.items.reduce((acum, item) => acum + (item.price * item.quantity), 0)
     this.time = new Date
   }
 
@@ -349,16 +349,22 @@ class Cart {
 const carrito = new Cart()
 
 // Definicion de la promesa
-const promesaProductos = new Promise((response, reject) => {
-  setTimeout(() => {
-    response(products)
-  }, 2000)
-})
+// const promesaProductos = new Promise((response, reject) => {
+//   setTimeout(() => {
+//     response(products)
+//   }, 2000)
+// })
 
 // Utilizar la promesa
 async function inicializarCatalogo() {
   try {
-    const productos = await promesaProductos
+    // const productos = await promesaProductos
+    const peticion = await fetch('https://fakestoreapi.com/products')
+    if (peticion.status !== 200 || !peticion.ok) {
+      throw new Error('Algo salió mal...')
+    }
+    const productos = await peticion.json()
+
     const productsContainer = document.querySelector('#productsContainer')
     productsContainer.innerHTML = ''
     productos.forEach((item) => {
@@ -384,3 +390,72 @@ async function inicializarCatalogo() {
 
 // Iniciamos el catalogo
 inicializarCatalogo()
+
+////////////////////////////////////////////// Clase 22 //////////////////////////////////////////////
+
+// Trabajando con fetch
+
+// Promesas
+fetch('https://fakestoreapi.com/products')
+  .then(peticion => {
+    return peticion.json()
+  })
+  .then(lista => {
+    console.log(lista)
+  })
+  .catch(error => console.error('Error al obtener la info', error))
+
+// async-await con try-catch
+async function obtenerProductos() {
+  try {
+    const peticion = await fetch('https://fakestoreapi.com/products')
+    if (peticion.status !== 200 || !peticion.ok) {
+      throw new Error('Algo salió mal...')
+    }
+
+    const lista = await peticion.json()
+    console.log(lista)
+  } catch (error) {
+    console.error('Error:', error)
+  }
+}
+
+obtenerProductos()
+
+// Usando POST
+fetch('https://fakestoreapi.com/products', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+    id: 21,
+    title: "Teclado computadora",
+    price: 350,
+    description: "Your perfect pack for everyday use and walks in the forest. Stash your laptop (up to 15 inches) in the padded sleeve, your everyday",
+    category: "men's clothing",
+    image: "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg",
+    rating: {
+      rate: 3.9,
+      count: 120
+    }
+  })
+}).then(response => response.json())
+  .then(data => console.log(data))
+  .catch(error => console.error(error))
+
+  
+// Usando MockAPI.io
+
+// GET
+fetch('https://6660f96b63e6a0189fe815dc.mockapi.io/api/productos')
+  .then(request => request.json())
+  .then(data => console.log(data))
+
+// POST
+fetch('https://6660f96b63e6a0189fe815dc.mockapi.io/api/productos', {
+  method: 'POST',
+  body: { "id": 20, "title": "DANVOUY Womens T Shirt Casual Cotton Short", "price": 12.99, "description": "95%Cotton,5%Spandex, Features: Casual, Short Sleeve, Letter Print,V-Neck,Fashion Tees, The fabric is soft and has some stretch., Occasion: Casual/Office/Beach/School/Home/Street. Season: Spring,Summer,Autumn,Winter.", "category": "women's clothing", "image": "https://fakestoreapi.com/img/61pHAEJ4NML._AC_UX679_.jpg", "rating": { "rate": 3.6, "count": 145 } }
+})
+  .then(request => request.json())
+  .then(data => console.log(data))
